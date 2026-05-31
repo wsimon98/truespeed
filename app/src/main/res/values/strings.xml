@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">TrueSpeed</string>
+
+    <string name="unit_mph">MPH</string>
+    <string name="unit_kph">KPH</string>
+    <string name="dist_mi">mi</string>
+    <string name="dist_km">km</string>
+
+    <string name="menu_title">TrueSpeed</string>
+    <string name="menu_units_mph">Units: switch to MPH</string>
+    <string name="menu_units_kph">Units: switch to KPH</string>
+    <string name="menu_mag_on">Magnetic heading fallback: ON</string>
+    <string name="menu_mag_off">Magnetic heading fallback: OFF</string>
+    <string name="menu_bubble_start">Show floating bubble</string>
+    <string name="menu_bubble_stop">Hide floating bubble</string>
+    <string name="menu_update">Check for updates</string>
+    <string name="menu_about">About</string>
+
+    <string name="trip_reset">Reset trip</string>
+    <string name="bubble_toggle">Bubble</string>
+
+    <string name="stat_trip">TRIP</string>
+    <string name="stat_max">MAX</string>
+    <string name="stat_avg">AVG</string>
+    <string name="btn_reset_trip">[ RESET TRIP ]</string>
+    <string name="btn_bubble">[ BUBBLE ]</string>
+
+    <string name="gps_waiting">Waiting for GPS…</string>
+    <string name="gps_weak">GPS weak</string>
+    <string name="gps_ok">GPS locked</string>
+    <string name="heading_waiting">heading: waiting for movement</string>
+    <string name="heading_gps">heading: GPS course</string>
+    <string name="heading_mag">heading: magnetic (phone facing)</string>
+
+    <string name="overlay_needed">Overlay permission is required for the floating bubble. Please enable it for TrueSpeed.</string>
+    <string name="install_needed">Allow installing apps from TrueSpeed to apply the update.</string>
+    <string name="update_none">You are on the latest version.</string>
+    <string name="update_failed">Could not check for updates.</string>
+    <string name="update_available">Update available</string>
+    <string name="update_download">Download &amp; install</string>
+    <string name="cancel">Cancel</string>
+
+    <string name="notif_channel">TrueSpeed bubble</string>
+    <string name="notif_text">Floating speedometer running</string>
+    <string name="notif_stop">Stop</string>
+</resources>

@@ -1,0 +1,13 @@
+*.iml
+.gradle/
+.idea/
+build/
+local.properties
+keystore.properties
+*.keystore
+*.jks
+.DS_Store
+captures/
+
+# Built download artifact (rebuild via gradle)
+web/*.apk

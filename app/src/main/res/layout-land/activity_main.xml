@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black">
+
+    <!-- Full-size, centered gauge. The compass circle is sized to the screen
+         HEIGHT, so the left/right areas beside it are empty wings. ALL controls
+         live in those wings, so the compass + speed number always stay the same
+         size and the buttons never crowd or resize them. -->
+    <com.american2day.truespeed.SpeedometerView
+        android:id="@+id/speedometer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <TextView
+        android:id="@+id/status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top|start"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="10dp"
+        android:maxWidth="150dp"
+        android:gravity="start"
+        android:textColor="@color/status_grey"
+        android:textSize="12sp"
+        android:text="@string/gps_waiting" />
+
+    <!-- Buttons stacked in the LEFT wing, vertically centered. -->
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical|start"
+        android:layout_marginStart="12dp"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/btnTrip"
+            android:layout_width="132dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/hud_frame"
+            android:textColor="@color/disp_red"
+            android:textSize="13sp"
+            android:textStyle="bold"
+            android:letterSpacing="0.08"
+            android:paddingVertical="14dp"
+            android:text="@string/btn_reset_trip" />
+
+        <Button
+            android:id="@+id/btnBubble"
+            android:layout_width="132dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/hud_frame"
+            android:textColor="@color/disp_red"
+            android:textSize="13sp"
+            android:textStyle="bold"
+            android:letterSpacing="0.08"
+            android:paddingVertical="14dp"
+            android:text="@string/btn_bubble" />
+    </LinearLayout>
+
+    <!-- Stat panels stacked in the RIGHT wing, vertically centered. -->
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical|end"
+        android:layout_marginEnd="12dp"
+        android:orientation="vertical">
+
+        <LinearLayout android:id="@+id/boxTrip" style="@style/HudPanelStacked">
+            <TextView style="@style/HudLabel" android:text="@string/stat_trip" />
+            <TextView android:id="@+id/tripVal" style="@style/HudValue" android:text="0.00" />
+            <TextView android:id="@+id/tripUnit" style="@style/HudUnit" android:text="MI" />
+        </LinearLayout>
+
+        <LinearLayout android:id="@+id/boxMax" style="@style/HudPanelStacked" android:layout_marginTop="8dp">
+            <TextView style="@style/HudLabel" android:text="@string/stat_max" />
+            <TextView android:id="@+id/maxVal" style="@style/HudValue" android:text="0" />
+            <TextView android:id="@+id/maxUnit" style="@style/HudUnit" android:text="MPH" />
+        </LinearLayout>
+
+        <LinearLayout android:id="@+id/boxAvg" style="@style/HudPanelStacked" android:layout_marginTop="8dp">
+            <TextView style="@style/HudLabel" android:text="@string/stat_avg" />
+            <TextView android:id="@+id/avgVal" style="@style/HudValue" android:text="0" />
+            <TextView android:id="@+id/avgUnit" style="@style/HudUnit" android:text="MPH" />
+        </LinearLayout>
+    </LinearLayout>
+
+</FrameLayout>

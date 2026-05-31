@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/black">
+
+    <!-- Gauge area: fills the space above the panels. Status overlays the top. -->
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <com.american2day.truespeed.SpeedometerView
+            android:id="@+id/speedometer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <TextView
+            android:id="@+id/status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top|center_horizontal"
+            android:layout_marginTop="8dp"
+            android:paddingHorizontal="12dp"
+            android:gravity="center"
+            android:textColor="@color/status_grey"
+            android:textSize="13sp"
+            android:text="@string/gps_waiting" />
+    </FrameLayout>
+
+    <!-- Three HUD stat panels. -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingHorizontal="12dp">
+
+        <LinearLayout
+            android:id="@+id/boxTrip"
+            style="@style/HudPanel">
+
+            <TextView style="@style/HudLabel" android:text="@string/stat_trip" />
+            <TextView android:id="@+id/tripVal" style="@style/HudValue" android:text="0.00" />
+            <TextView android:id="@+id/tripUnit" style="@style/HudUnit" android:text="MI" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/boxMax"
+            style="@style/HudPanel"
+            android:layout_marginStart="8dp">
+
+            <TextView style="@style/HudLabel" android:text="@string/stat_max" />
+            <TextView android:id="@+id/maxVal" style="@style/HudValue" android:text="0" />
+            <TextView android:id="@+id/maxUnit" style="@style/HudUnit" android:text="MPH" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/boxAvg"
+            style="@style/HudPanel"
+            android:layout_marginStart="8dp">
+
+            <TextView style="@style/HudLabel" android:text="@string/stat_avg" />
+            <TextView android:id="@+id/avgVal" style="@style/HudValue" android:text="0" />
+            <TextView android:id="@+id/avgUnit" style="@style/HudUnit" android:text="MPH" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- Framed HUD buttons. -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingHorizontal="12dp"
+        android:paddingVertical="12dp">
+
+        <Button
+            android:id="@+id/btnTrip"
+            style="@style/HudButton"
+            android:text="@string/btn_reset_trip" />
+
+        <Button
+            android:id="@+id/btnBubble"
+            style="@style/HudButton"
+            android:layout_marginStart="10dp"
+            android:text="@string/btn_bubble" />
+    </LinearLayout>
+
+</LinearLayout>

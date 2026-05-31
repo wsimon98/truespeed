@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="status_grey">#FF8E8E93</color>
+
+    <!-- Swipe-selectable display colors (background always stays black). -->
+    <color name="disp_white">#FFFFFFFF</color>
+    <color name="disp_red">#FFFF3B30</color>
+    <color name="disp_blue">#FF0A84FF</color>
+    <color name="disp_yellow">#FFFFD60A</color>
+    <color name="disp_green">#FF30D158</color>
+    <color name="disp_orange">#FFFF9F0A</color>
+    <color name="disp_purple">#FFBF5AF2</color>
+</resources>
