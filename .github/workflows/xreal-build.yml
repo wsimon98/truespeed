@@ -5,7 +5,7 @@ on:
     branches:
       - chatgpt-xreal-walk-build-20260828
     paths:
-      - 'xreal-build/**'
+      - 'xreal-project/**'
       - '.github/workflows/xreal-build.yml'
 
 permissions:
@@ -29,26 +29,16 @@ jobs:
         with:
           gradle-version: '8.9'
 
-      - name: Restore generated source project
-        shell: bash
-        run: |
-          mkdir -p build-work
-          cat xreal-build/source.part.aa xreal-build/source.part.ab xreal-build/source.part.ac1 xreal-build/source.part.ac2 xreal-build/source.part.ad xreal-build/source.part.ae > build-work/source.b64
-          base64 -d build-work/source.b64 > build-work/source.zip
-          cd build-work
-          unzip -q source.zip
-
       - name: Build debug APK
         shell: bash
-        run: |
-          gradle -p build-work/Retro_XREAL_Walk_Source :app:assembleDebug --stacktrace
+        run: gradle -p xreal-project :app:assembleDebug --stacktrace
 
-      - name: Assemble requested ZIP contents
+      - name: Assemble requested package
         shell: bash
         run: |
           mkdir -p deliverable/SOURCE
-          cp -R build-work/Retro_XREAL_Walk_Source/. deliverable/SOURCE/
-          cp build-work/Retro_XREAL_Walk_Source/app/build/outputs/apk/debug/app-debug.apk deliverable/Retro_XREAL_Walk-v0.1-debug.apk
+          cp -R xreal-project/. deliverable/SOURCE/
+          cp xreal-project/app/build/outputs/apk/debug/app-debug.apk deliverable/Retro_XREAL_Walk-v0.1-debug.apk
           rm -rf deliverable/SOURCE/app/build deliverable/SOURCE/.gradle
           cat > deliverable/INSTALL.txt <<'TXT'
           RETRO XREAL WALK v0.1
