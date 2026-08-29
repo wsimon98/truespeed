@@ -38,14 +38,20 @@ jobs:
         run: |
           mkdir -p deliverable/SOURCE
           cp -R xreal-project/. deliverable/SOURCE/
-          cp xreal-project/app/build/outputs/apk/debug/app-debug.apk deliverable/Retro_XREAL_Walk-v0.1-debug.apk
+          cp xreal-project/app/build/outputs/apk/debug/app-debug.apk deliverable/Retro_XREAL_Walk-v0.2-debug.apk
           rm -rf deliverable/SOURCE/app/build deliverable/SOURCE/.gradle
           cat > deliverable/INSTALL.txt <<'TXT'
-          RETRO XREAL WALK v0.1
+          RETRO XREAL WALK v0.2
 
-          Install Retro_XREAL_Walk-v0.1-debug.apk on the Android phone.
+          Install Retro_XREAL_Walk-v0.2-debug.apk on the Android phone.
           Connect the original XREAL Air, open the app, grant USB permission,
           face treadmill-forward, tap RECENTER HEAD, set MPH, then START WALK.
+
+          Volume Up increases walking speed by 0.1 MPH.
+          Volume Down decreases walking speed by 0.1 MPH.
+
+          This build remaps original XREAL Air head axes for normal yaw/pitch view movement,
+          keeps the clustered star systems, and adds a denser random background starfield.
 
           This is a debug-signed prototype APK intended for sideload testing.
           TXT
@@ -53,7 +59,7 @@ jobs:
       - name: Upload source plus APK
         uses: actions/upload-artifact@v4
         with:
-          name: Retro_XREAL_Walk_v0.1_SOURCE_AND_APK
+          name: Retro_XREAL_Walk_v0.2_SOURCE_AND_APK
           path: deliverable/*
           if-no-files-found: error
           retention-days: 7
