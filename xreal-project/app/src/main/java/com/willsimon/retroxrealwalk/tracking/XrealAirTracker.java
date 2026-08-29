@@ -205,7 +205,10 @@ public final class XrealAirTracker {
 
             estimator.update(gx, gy, gz, ax, ay, az, dt);
             float[] q = estimator.getQuaternion();
-            headPose.setXrealQuaternion(q[0], q[1], q[2], q[3], System.nanoTime());
+            // Original Air sensor axes differ from the renderer axes.
+            // Remap quaternion vector components so physical yaw becomes view yaw,
+            // pitch is no longer inverted, and normal left/right head turns do not roll the scene.
+            headPose.setXrealQuaternion(q[0], -q[1], q[3], q[2], System.nanoTime());
         }
 
         running.set(false);

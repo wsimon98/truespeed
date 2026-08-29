@@ -26,6 +26,7 @@ public final class RetroRenderer implements GLSurfaceView.Renderer {
     private final HeadPose headPose;
     private final LineBatch lines = new LineBatch(18000);
     private final List<StarSystem> starSystems = new ArrayList<>();
+    private final List<Star> backgroundStars = new ArrayList<>();
     private final Random shootingRandom = new Random(0x1984BEEF);
 
     private final float[] projection = new float[16];
@@ -46,6 +47,7 @@ public final class RetroRenderer implements GLSurfaceView.Renderer {
     public RetroRenderer(WalkState walkState, HeadPose headPose) {
         this.walkState = walkState;
         this.headPose = headPose;
+        buildBackgroundStars();
         buildStarSystems();
     }
 
@@ -199,6 +201,9 @@ public final class RetroRenderer implements GLSurfaceView.Renderer {
     }
 
     private void addStars() {
+        for (Star star : backgroundStars) {
+            drawStar(star, 1.0f);
+        }
         for (StarSystem system : starSystems) {
             Star primary = system.stars.get(0);
             drawStar(primary, 1.0f);
@@ -219,6 +224,35 @@ public final class RetroRenderer implements GLSurfaceView.Renderer {
         lines.add(s.x-r, s.y, s.z, s.x+r, s.y, s.z, s.r,s.g,s.b,a);
         lines.add(s.x, s.y-r, s.z, s.x, s.y+r, s.z, s.r,s.g,s.b,a);
         if (s.size > 0.13f) lines.add(s.x, s.y, s.z-r, s.x, s.y, s.z+r, s.r,s.g,s.b,a*0.75f);
+    }
+
+    private void buildBackgroundStars() {
+        Random r = new Random(0x5A17F13DL);
+        for (int i = 0; i < 420; i++) {
+            double yaw = r.nextDouble() * Math.PI * 2.0;
+            double pitch = Math.toRadians(3.0 + r.nextDouble() * 84.0);
+            float radius = 92f + r.nextFloat() * 54f;
+            float[] pos = spherical(radius, yaw, pitch);
+
+            float brightnessRoll = r.nextFloat();
+            float size;
+            float alpha;
+            if (brightnessRoll < 0.72f) {
+                size = 0.018f + r.nextFloat() * 0.020f;
+                alpha = 0.20f + r.nextFloat() * 0.24f;
+            } else if (brightnessRoll < 0.95f) {
+                size = 0.035f + r.nextFloat() * 0.030f;
+                alpha = 0.42f + r.nextFloat() * 0.23f;
+            } else {
+                size = 0.065f + r.nextFloat() * 0.050f;
+                alpha = 0.68f + r.nextFloat() * 0.22f;
+            }
+
+            float[] c = starColor(r.nextInt(10) == 0 ? 2 : (r.nextBoolean() ? 0 : 3));
+            backgroundStars.add(new Star(
+                    pos[0], pos[1] + EYE_HEIGHT, pos[2],
+                    size, c[0], c[1], c[2], alpha));
+        }
     }
 
     private void buildStarSystems() {

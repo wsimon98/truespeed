@@ -11,6 +11,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.view.Display;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -144,25 +145,30 @@ public final class MainActivity extends Activity implements DisplayManager.Displ
         stats.addView(timeText, paddedTop(4));
         root.addView(stats, panelParams());
 
+        Button recenter = button("RECENTER HEAD");
+        recenter.setTextSize(19);
+        recenter.setTextColor(Color.BLACK);
+        recenter.setBackgroundColor(CYAN);
+        recenter.setOnClickListener(v -> {
+            headPose.recenter();
+            latestStatus = "Head view recentered. Treadmill-forward direction is unchanged.";
+        });
+        LinearLayout.LayoutParams recenterParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, dp(64));
+        recenterParams.topMargin = dp(2);
+        recenterParams.bottomMargin = dp(6);
+        root.addView(recenter, recenterParams);
+
         pauseButton = button("START WALK");
-        pauseButton.setTextSize(19);
+        pauseButton.setTextSize(14);
         pauseButton.setTextColor(Color.BLACK);
         pauseButton.setBackgroundColor(GREEN);
         pauseButton.setOnClickListener(v -> {
             walkState.togglePaused();
             updatePauseButton();
         });
-        LinearLayout.LayoutParams big = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, dp(62));
-        big.topMargin = dp(2);
-        big.bottomMargin = dp(10);
-        root.addView(pauseButton, big);
-
-        Button recenter = button("RECENTER HEAD");
-        recenter.setOnClickListener(v -> {
-            headPose.recenter();
-            latestStatus = "Head view recentered. Treadmill-forward direction is unchanged.";
-        });
-        root.addView(recenter, fullButtonParams());
+        LinearLayout.LayoutParams pauseParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, dp(44));
+        pauseParams.bottomMargin = dp(10);
+        root.addView(pauseButton, pauseParams);
 
         Button reconnect = button("RECONNECT XREAL AIR");
         reconnect.setOnClickListener(v -> xrealTracker.reconnect());
@@ -177,7 +183,7 @@ public final class MainActivity extends Activity implements DisplayManager.Displ
         root.addView(reset, fullButtonParams());
 
         TextView help = text(
-                "USE: Connect the XREAL Air, open this app, grant USB permission, face treadmill-forward, tap RECENTER HEAD, set the treadmill speed here, then tap START WALK. Looking around changes only your view. Walking always continues straight down the virtual path. Black areas emit no light through the XREAL optics.",
+                "USE: Connect the XREAL Air, open this app, grant USB permission, face treadmill-forward, tap RECENTER HEAD, set the treadmill speed here, then tap START WALK. Volume Up adds 0.1 MPH and Volume Down subtracts 0.1 MPH. Looking around changes only your view. Walking always continues straight down the virtual path. Black areas emit no light through the XREAL optics.",
                 12, MUTED);
         help.setPadding(dp(2), dp(14), dp(2), 0);
         root.addView(help, matchWrap());
@@ -189,6 +195,21 @@ public final class MainActivity extends Activity implements DisplayManager.Displ
     private void adjustSpeed(double delta) {
         walkState.adjustSpeed(delta);
         preferences.edit().putFloat("speed_mph", (float)walkState.getSpeedMph()).apply();
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_VOLUME_UP) {
+            adjustSpeed(0.1);
+            latestStatus = String.format(Locale.US, "Speed increased to %.1f MPH.", walkState.getSpeedMph());
+            return true;
+        }
+        if (keyCode == KeyEvent.KEYCODE_VOLUME_DOWN) {
+            adjustSpeed(-0.1);
+            latestStatus = String.format(Locale.US, "Speed decreased to %.1f MPH.", walkState.getSpeedMph());
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
     }
 
     private void updatePauseButton() {
